@@ -57,7 +57,7 @@ technology; headings, landmarks, and a skip link support navigation.
 
 The page frames Kit as a portfolio demo and explicitly notes that external
 services and live AI are not connected. Demo links point to `/login`, with a
-client-only demo credential check leading to `/home`. Other app screens, local
+client-only demo credential check leading to `/home`. Remaining app screens, local
 persistence, and LLM/service integrations remain outside this milestone.
 
 Home uses the same typography, spacing, surfaces, and controls. Its layout
@@ -66,3 +66,20 @@ Dinner and upcoming details recede through smaller, muted text and thin dividers
 Member colors use separate `member-alex`, `member-jordan`, `member-emma`,
 `member-mason`, and `member-harper` tokens. Names always accompany the colors;
 system status uses text and icons in addition to evergreen styling.
+
+Household's main emphasis is What Kit Knows; People & Pets stay as simple rows,
+with restrained arrows and hover styling opening a compact detail panel. A named
+color selector uses the existing household palette; other profile details are
+read-only. A small remembered-facts section links to the person's filtered
+knowledge view rather than duplicating memory controls in the panel.
+Scout is listed with the people rather than as a belonging. Household Details
+reveals an availability message only after interaction. The
+knowledge library starts with search, small text summaries, and compact household
+filters. Paginated rows use separators rather than cards or a table. Statements
+carry the strongest hierarchy; scope, type, and expiration are smaller. Rules
+have an evergreen left rule and a firmer type label, without error colors.
+Selecting a row opens one restrained detail dialog containing provenance,
+confidence, and memory controls. The native Why does Kit know this? disclosure
+reveals explanation on demand. Search, bounded pages, and progressive disclosure
+keep the resting page manageable as knowledge grows. No scoring, meters, or
+technical AI terminology is shown.

@@ -19,6 +19,36 @@ export const demoHousehold = {
     mason: { id: "mason", name: "Mason Parker", firstName: "Mason", role: "Child", age: 11, color: "bg-member-mason" },
     harper: { id: "harper", name: "Harper Parker", firstName: "Harper", role: "Child", age: 8, color: "bg-member-harper" },
   } satisfies Record<MemberId, HouseholdMember>,
+  pets: [
+    { id: "scout" as const, name: "Scout", species: "Dog" },
+  ],
+};
+
+export const householdColors = [
+  { label: "Blue", value: "bg-member-alex" },
+  { label: "Warm amber", value: "bg-member-jordan" },
+  { label: "Coral", value: "bg-member-emma" },
+  { label: "Green", value: "bg-member-mason" },
+  { label: "Purple", value: "bg-member-harper" },
+];
+
+export const demoPersonProfiles: Record<MemberId, { birthday: string; interests: string }> = {
+  alex: { birthday: "1986-04-12", interests: "Family outings, hiking, and weekend cooking." },
+  jordan: { birthday: "1985-08-23", interests: "Coaching soccer and trying new recipes." },
+  emma: { birthday: "2012-03-07", interests: "Soccer and time with friends." },
+  mason: { birthday: "2015-06-18", interests: "Reading adventure stories and building with blocks." },
+  harper: { birthday: "2017-10-20", interests: "Drawing and playing with Scout." },
+};
+
+export function ageOnDate(birthday: string, date: string) {
+  return Number(date.slice(0, 4)) - Number(birthday.slice(0, 4)) - (date.slice(5) < birthday.slice(5) ? 1 : 0);
+}
+
+export const demoPetDetails: Record<"scout", { label: string; value: string }[]> = {
+  scout: [
+    { label: "Enjoys", value: "Evening walks and a game of fetch." },
+    { label: "Daily rhythm", value: "Breakfast in the morning and a walk after dinner." },
+  ],
 };
 
 // Public prototype credentials, not secrets or real authentication.
@@ -33,6 +63,7 @@ type BriefItem = {
 };
 
 export const demoDay = {
+  date: "2026-10-13",
   label: "Tuesday, October 13",
   summary: "Tuesday is busy after school, but you’re in good shape.",
   brief: [
