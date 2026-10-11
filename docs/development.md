@@ -9,7 +9,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open http://localhost:3000. The root route is only a scaffold placeholder.
+Open http://localhost:3000. The root route is the public landing page.
 
 ```sh
 pnpm lint
@@ -39,14 +39,15 @@ default; add `"use client"` at the smallest boundary that needs state, events,
 or browser APIs.
 
 Planned routes include Landing, Login, Home, Calendar, Meals, Lists & Tasks,
-Household, Settings, and the AI assistant. None are implemented yet. Future
+Household, Settings, and the AI assistant. Only Landing is implemented. The
+demo CTA points to `/login`, which intentionally does not exist yet. Future
 local-storage access belongs in client-side hooks or features after mounting;
 do not read browser storage during server rendering. Storage keys, schemas,
 and state libraries are intentionally deferred until the first feature needs them.
 
 Tailwind uses its PostCSS integration and CSS-first configuration in
 `src/app/globals.css`. Lucide icons can be imported individually from
-`lucide-react`. System fonts keep the scaffold build independent of font downloads.
+`lucide-react`. Local fonts keep builds independent of font downloads.
 
 ESLint 9 is pinned to the major supported by the plugins bundled with Next.js's
 ESLint configuration. Upgrade it when those plugins support ESLint 10.

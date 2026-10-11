@@ -2,11 +2,57 @@
 
 :root {
   color-scheme: light;
+  --kit-primary: #356859;
+  --kit-primary-dark: #25332f;
+  --kit-background: #f7f6f2;
+  --kit-surface: #ffffff;
+  --kit-surface-secondary: #edf1ed;
+  --kit-border: #d9dfda;
+  --kit-text: #252927;
+  --kit-text-secondary: #66706b;
+  --kit-accent: #c47a52;
+  --kit-success: #3f755d;
+  --kit-warning: #b87934;
+  --kit-critical: #b24c4c;
+  --kit-radius: 12px;
+}
+
+@theme inline {
+  --color-primary: var(--kit-primary);
+  --color-primary-dark: var(--kit-primary-dark);
+  --color-background: var(--kit-background);
+  --color-surface: var(--kit-surface);
+  --color-surface-secondary: var(--kit-surface-secondary);
+  --color-border: var(--kit-border);
+  --color-foreground: var(--kit-text);
+  --color-muted: var(--kit-text-secondary);
+  --color-accent: var(--kit-accent);
+  --color-success: var(--kit-success);
+  --color-warning: var(--kit-warning);
+  --color-critical: var(--kit-critical);
+  --font-sans: var(--font-kit-sans);
+  --font-display: var(--font-kit-display);
+  --radius-kit: var(--kit-radius);
 }
 
 body {
   margin: 0;
-  background: #fafafa;
-  color: #171717;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--kit-background);
+  color: var(--kit-text);
+  font-family: var(--font-kit-sans), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--kit-surface-secondary);
+  color: var(--kit-primary-dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--kit-primary);
+  outline-offset: 5px;
+}
+
+section[id] {
+  scroll-margin-top: 2rem;
 }
