@@ -56,6 +56,13 @@ capability rows, and final CTA. Decorative Lucide icons are hidden from assistiv
 technology; headings, landmarks, and a skip link support navigation.
 
 The page frames Kit as a portfolio demo and explicitly notes that external
-services and live AI are not connected. Demo links point to `/login`
-as a future destination; Login, Home, other app screens, local persistence, and
-LLM/service integrations remain outside this milestone.
+services and live AI are not connected. Demo links point to `/login`, with a
+client-only demo credential check leading to `/home`. Other app screens, local
+persistence, and LLM/service integrations remain outside this milestone.
+
+Home uses the same typography, spacing, surfaces, and controls. Its layout
+prioritizes one reviewable change and a short daily brief, without KPI cards.
+Dinner and upcoming details recede through smaller, muted text and thin dividers.
+Member colors use separate `member-alex`, `member-jordan`, `member-emma`,
+`member-mason`, and `member-harper` tokens. Names always accompany the colors;
+system status uses text and icons in addition to evergreen styling.

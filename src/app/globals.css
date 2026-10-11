@@ -15,6 +15,11 @@
   --kit-warning: #b87934;
   --kit-critical: #b24c4c;
   --kit-radius: 12px;
+  --kit-member-alex: #47749b;
+  --kit-member-jordan: #ae702e;
+  --kit-member-emma: #bd5d55;
+  --kit-member-mason: #4c795b;
+  --kit-member-harper: #8969a4;
 }
 
 @theme inline {
@@ -33,6 +38,11 @@
   --font-sans: var(--font-kit-sans);
   --font-display: var(--font-kit-display);
   --radius-kit: var(--kit-radius);
+  --color-member-alex: var(--kit-member-alex);
+  --color-member-jordan: var(--kit-member-jordan);
+  --color-member-emma: var(--kit-member-emma);
+  --color-member-mason: var(--kit-member-mason);
+  --color-member-harper: var(--kit-member-harper);
 }
 
 body {
