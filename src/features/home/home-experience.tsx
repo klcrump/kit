@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { ArrowRight, Check, CheckCheck, Clock3, CookingPot, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MemberLabel } from "@/components/ui/member-label";
@@ -8,8 +8,48 @@ import { demoDay, demoHousehold } from "@/lib/demo-household";
 
 export function HomeExperience() {
   const [approved, setApproved] = useState(false);
+  const [message, setMessage] = useState("");
+  const [submittedMessage, setSubmittedMessage] = useState("");
+  const [reply, setReply] = useState("");
+  const [askError, setAskError] = useState("");
+  const [isAsking, setIsAsking] = useState(false);
+  const askPending = useRef(false);
   const user = demoHousehold.members[demoHousehold.primaryUserId];
   const cook = demoHousehold.members[demoDay.dinner.cookId];
+
+  async function handleAsk(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!message.trim() || askPending.current) return;
+
+    const submitted = message.trim();
+    askPending.current = true;
+    setSubmittedMessage(submitted);
+    setMessage("");
+    setIsAsking(true);
+    setReply("");
+    setAskError("");
+
+    try {
+      const response = await fetch("/api/ask-kit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: submitted }),
+      });
+      const data: unknown = await response.json();
+
+      if (!response.ok || !data || typeof data !== "object" ||
+        !("reply" in data) || typeof data.reply !== "string" || !data.reply.trim()) {
+        throw new Error("Ask Kit request failed");
+      }
+
+      setReply(data.reply);
+    } catch {
+      setAskError("Kit couldn’t respond right now. Please try again.");
+    } finally {
+      askPending.current = false;
+      setIsAsking(false);
+    }
+  }
 
   return (
     <main id="main" className="mx-auto max-w-5xl px-6 py-10 sm:px-10 lg:px-14 lg:py-12">
@@ -80,11 +120,25 @@ export function HomeExperience() {
 
       <section id="ask-kit" aria-labelledby="ask-heading" className="mt-8">
         <div className="flex items-center gap-3"><MessageCircle aria-hidden="true" strokeWidth={1.5} className="size-5 text-primary" /><h2 id="ask-heading" className="font-display text-2xl text-primary-dark">Ask Kit</h2></div>
-        <div className="mt-4 flex items-center gap-3 rounded-kit border border-border bg-surface px-4 py-3">
+        {submittedMessage && (
+          <div aria-label="Current exchange with Kit" className="mt-4 rounded-kit border border-border bg-surface p-4">
+            <div>
+              <p className="text-xs font-medium text-muted">You</p>
+              <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-7">{submittedMessage}</p>
+            </div>
+            <div role="status" aria-live="polite" aria-atomic="true" className="mt-4 border-t border-border pt-4">
+              <p className="text-xs font-medium text-primary">Kit</p>
+              {isAsking && <p className="mt-2 text-sm leading-6 text-muted">Kit is thinking…</p>}
+              {reply && <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-7 text-muted">{reply}</p>}
+            </div>
+            {askError && <p role="alert" className="mt-2 text-sm leading-6 text-muted">{askError}</p>}
+          </div>
+        )}
+        <form onSubmit={handleAsk} aria-busy={isAsking} className="mt-4 flex items-center gap-3 rounded-kit border border-border bg-surface px-4 py-3">
           <label htmlFor="ask-kit-input" className="sr-only">Ask Kit a question</label>
-          <input id="ask-kit-input" type="text" placeholder="What’s on your mind?" disabled className="min-h-8 min-w-0 flex-1 bg-transparent text-sm text-muted placeholder:text-muted" />
-          <button type="button" disabled aria-label="Send to Kit" className="flex size-10 shrink-0 items-center justify-center rounded-kit bg-surface-secondary text-primary"><ArrowRight aria-hidden="true" className="size-4" /></button>
-        </div>
+          <input id="ask-kit-input" type="text" placeholder="What’s on your mind?" value={message} onChange={(event) => setMessage(event.target.value)} maxLength={4000} disabled={isAsking} required className="min-h-8 min-w-0 flex-1 bg-transparent text-sm text-muted placeholder:text-muted" />
+          <button type="submit" disabled={isAsking || !message.trim()} aria-label="Send to Kit" className="flex size-10 shrink-0 items-center justify-center rounded-kit bg-surface-secondary text-primary disabled:cursor-not-allowed disabled:opacity-60"><ArrowRight aria-hidden="true" className="size-4" /></button>
+        </form>
       </section>
 
       <section aria-labelledby="upcoming-heading" className="mt-10">
